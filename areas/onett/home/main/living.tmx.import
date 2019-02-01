@@ -1,0 +1,22 @@
+[remap]
+
+importer="vnen.tiled_importer"
+type="PackedScene"
+path="res://.import/living.tmx-367bdd47488d9ed2d03315364eb48172.scn"
+
+[deps]
+
+source_file="res://areas/onett/home/main/living.tmx"
+dest_files=[ "res://.import/living.tmx-367bdd47488d9ed2d03315364eb48172.scn" ]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+uv_clip=true
+image_flags=0
+collision_layer=1
+embed_internal_images=false
+save_tiled_properties=false
+add_background=true
+post_import_script=""

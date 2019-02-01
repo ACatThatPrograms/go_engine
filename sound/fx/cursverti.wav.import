@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/cursverti.wav-1f7de376d57b8d8aba5ab30e1a4f81e0.sample"
+
+[deps]
+
+source_file="res://sound/fx/cursverti.wav"
+dest_files=[ "res://.import/cursverti.wav-1f7de376d57b8d8aba5ab30e1a4f81e0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

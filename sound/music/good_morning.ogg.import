@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/good_morning.ogg-f80f388df95251dcbc736e6e6683fc01.oggstr"
+
+[deps]
+
+source_file="res://sound/music/good_morning.ogg"
+dest_files=[ "res://.import/good_morning.ogg-f80f388df95251dcbc736e6e6683fc01.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

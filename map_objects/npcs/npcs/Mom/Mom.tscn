@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://map_objects/npcs/npcs/Mom/Mom.gd" type="Script" id=1]
+[ext_resource path="res://engine/entity_anim.tscn" type="PackedScene" id=2]
+[ext_resource path="res://map_objects/npcs/assets/mom.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 4 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 9, 5 )
+
+[node name="Mom" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+load_sprite_dir = null
+movement_type = "wander"
+speak_command = "Thank you so much for helping out and bringing my boy home! [wait] @ You're always welcome here. [wait] [end]"
+char_0_speak = "Way to go! [wait] [break] I knew you guys could do it from day one! [wait] [end]"
+char_1_speak = "Thank you so much for taking care of my dear [char_0] . [wait] [break] @ I don't know what I would do without you [char_1] . [wait] [end]"
+char_2_speak = null
+char_3_speak = null
+
+[node name="anim" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
+
+texture = ExtResource( 3 )
+vframes = 2
+hframes = 4
+
+[node name="collider" type="CollisionShape2D" parent="." index="2"]
+
+position = Vector2( 0, 8 )
+shape = SubResource( 2 )
+
+[node name="hitbox" type="Area2D" parent="." index="3"]
+
+editor/display_folded = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" index="0"]
+
+position = Vector2( 0, 8 )
+shape = SubResource( 3 )
+
+

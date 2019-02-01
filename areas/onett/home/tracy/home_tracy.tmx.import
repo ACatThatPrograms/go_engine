@@ -1,0 +1,22 @@
+[remap]
+
+importer="vnen.tiled_importer"
+type="PackedScene"
+path="res://.import/home_tracy.tmx-3e9f7e04d8b6a7d381a03bb677ab1b6c.scn"
+
+[deps]
+
+source_file="res://areas/onett/home/tracy/home_tracy.tmx"
+dest_files=[ "res://.import/home_tracy.tmx-3e9f7e04d8b6a7d381a03bb677ab1b6c.scn" ]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+uv_clip=true
+image_flags=0
+collision_layer=1
+embed_internal_images=false
+save_tiled_properties=false
+add_background=true
+post_import_script=""

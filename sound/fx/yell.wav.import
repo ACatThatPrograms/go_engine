@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/yell.wav-67032e684b03356a0672861cd1707a9b.sample"
+
+[deps]
+
+source_file="res://sound/fx/yell.wav"
+dest_files=[ "res://.import/yell.wav-67032e684b03356a0672861cd1707a9b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

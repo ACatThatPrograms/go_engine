@@ -1,0 +1,84 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://areas/onett/home/tracy/home_tracy.tmx" type="PackedScene" id=1]
+[ext_resource path="res://areas/onett/home/tracy/home_tracy.gd" type="Script" id=2]
+[ext_resource path="res://map_objects/npcs/npcs/Tracy/Tracy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://map_objects/giftbox/giftbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/party.tscn" type="PackedScene" id=5]
+[ext_resource path="res://map_objects/inspection_box/inspection_box.tscn" type="PackedScene" id=6]
+[ext_resource path="res://map_objects/door/door.tscn" type="PackedScene" id=7]
+
+[node name="home_tracy" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+music_id = "[0]"
+start_sound = ""
+default_load_position = Vector2( 224, 103 )
+
+[node name="Over" parent="." index="1"]
+
+editor/display_folded = false
+
+[node name="Tracy" parent="Over" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 135, 81 )
+speak_command = "Hey, what's up? [wait] [end]"
+char_0_speak = "Hey, hows it going? [wait] @ It's been awhile since we had a heart to heart you know [dd] . [dd] . [dd] . [wait] @ Well I won't get too mushy, but you can always talk to your big sis! [wait] [flag_on] [0] [end]"
+char_2_speak = "I bet you helped out a lot, huh Mr. Smarty Pants? [wait] [break] Ha! [d] [6] Ha! [d] [6] Ha! [d] [6] [break] @ Don't worry [char_2] , I'm just messing with you. [wait] [end]"
+
+[node name="giftbox" parent="Over" index="1" instance=ExtResource( 4 )]
+
+position = Vector2( 31, 113 )
+giftbox_id = 0
+item_id = 400
+
+[node name="party" parent="Over" index="2" instance=ExtResource( 5 )]
+
+[node name="inspections" type="Node2D" parent="Over" index="3"]
+
+[node name="dresser" parent="Over/inspections" index="0" instance=ExtResource( 6 )]
+
+position = Vector2( 179.5, 64 )
+scale = Vector2( 1.23438, 1 )
+t_char_0 = "(Peeking is a bad idea.) [wait] [end]"
+t_char_1 = "(I like her clothes!) [wait] [end]"
+t_char_2 = "(Uh..) [wait] [break] @ (That seems like a bad idea...) [wait] [end]"
+t_char_3 = "(Let's not break protocol here.) [wait] [end]"
+
+[node name="window" parent="Over/inspections" index="1" instance=ExtResource( 6 )]
+
+position = Vector2( 144, 56 )
+scale = Vector2( 1.23438, 1 )
+t_char_0 = "(I can see the same tree from my room!) [wait] [end]"
+t_char_1 = "(I can see the same tree from [char_0] 's room.) [wait] [end]"
+t_char_2 = "(I can see the same tree from [char_0] 's room.) [wait] [end]"
+t_char_3 = "(I can see the same tree from [char_0] 's room.) [wait] [end]"
+
+[node name="bed" parent="Over/inspections" index="2" instance=ExtResource( 6 )]
+
+position = Vector2( 58.9199, 79.5401 )
+rotation = 0.772123
+scale = Vector2( 1.23438, 1 )
+t_char_0 = "(It's always neat and tidy!) [wait] [end]"
+t_char_1 = "(Uh oh, her bed is nicer than mine [dd] . [dd] . [dd] . [wait] @ (I wonder if that's bad.) [wait] [end]"
+t_char_2 = "(Oh wow!) [wait] [break] Look how soft it is. [wait] [end]"
+t_char_3 = "(I don't really care for extra soft beds.) [wait] [end]"
+
+[node name="dresser_2" parent="Over/inspections" index="3" instance=ExtResource( 6 )]
+
+position = Vector2( 88, 63.8967 )
+scale = Vector2( 1.53125, 1 )
+t_char_0 = "(I think Tracy needs some new clothes.) [wait] [end]"
+t_char_1 = "(I like these a lot!) [wait] [end]"
+t_char_2 = "(They all look really clean.) [wait] [break] @ (I wonder why everyone has so many of the same outfit...?) [wait] [end]"
+t_char_3 = "(Hmm [dd] . [dd] . [dd] . [wait] [break] @ (There's way too much pink in this room.) [wait] [end]"
+
+[node name="door" parent="." index="2" instance=ExtResource( 7 )]
+
+position = Vector2( 243, 109 )
+target_scene = "res://areas/onett/home/hall/home_hall.tscn"
+target_position = Vector2( 143, 105 )
+arrival_dir = "down"
+
+

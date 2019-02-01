@@ -1,0 +1,84 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://areas/onett/home/hall/home_hall.tmx" type="PackedScene" id=1]
+[ext_resource path="res://areas/onett/home/hall/home_hall.gd" type="Script" id=2]
+[ext_resource path="res://player/party.tscn" type="PackedScene" id=3]
+[ext_resource path="res://map_objects/door/door.tscn" type="PackedScene" id=4]
+[ext_resource path="res://map_objects/inspection_box/inspection_box.tscn" type="PackedScene" id=5]
+
+[node name="home_hall" index="0" instance=ExtResource( 1 )]
+
+position = Vector2( 0, -1 )
+script = ExtResource( 2 )
+music_id = ""
+start_sound = ""
+default_load_position = Vector2( 150, 110 )
+
+[node name="Over" type="TileMap" parent="." index="1"]
+
+mode = 0
+tile_set = null
+cell_size = Vector2( 64, 64 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = true
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+
+[node name="party" parent="Over" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 94, 108 )
+
+[node name="door" parent="." index="3" instance=ExtResource( 4 )]
+
+position = Vector2( 243, 109 )
+target_scene = "res://areas/onett/home/room/home_room.tscn"
+target_position = Vector2( 53, 93 )
+arrival_dir = "right"
+
+[node name="door2" parent="." index="4" instance=ExtResource( 4 )]
+
+position = Vector2( 144, 90 )
+target_scene = "res://areas/onett/home/tracy/home_tracy.tscn"
+target_position = Vector2( 228, 115 )
+arrival_dir = "left"
+
+[node name="door3" parent="." index="5" instance=ExtResource( 4 )]
+
+position = Vector2( 15, 110 )
+target_scene = "res://areas/onett/home/main/living.tscn"
+target_position = Vector2( 53, 96 )
+arrival_dir = "right"
+play_sound_on_open = false
+open_sound_id = "[12]"
+
+[node name="inspections" type="Node2D" parent="." index="6"]
+
+editor/display_folded = true
+
+[node name="plant_1" parent="inspections" index="0" instance=ExtResource( 5 )]
+
+position = Vector2( 184, 96 )
+text = "(It's a plant.)"
+
+[node name="plant_2" parent="inspections" index="1" instance=ExtResource( 5 )]
+
+position = Vector2( 216, 96 )
+text = "(It's a plant.)"
+
+[node name="picture" parent="inspections" index="2" instance=ExtResource( 5 )]
+
+position = Vector2( 80, 88 )
+scale = Vector2( 1.46875, 1 )
+text = "(A picture of some twigs.)"
+
+

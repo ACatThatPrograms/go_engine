@@ -1,0 +1,22 @@
+[remap]
+
+importer="vnen.tiled_importer"
+type="PackedScene"
+path="res://.import/onett_pre_clear.tmx-6a12cafb0c93bfa662c8f26da0ad6883.scn"
+
+[deps]
+
+source_file="res://areas/onett/onett/onett_pre_clear.tmx"
+dest_files=[ "res://.import/onett_pre_clear.tmx-6a12cafb0c93bfa662c8f26da0ad6883.scn" ]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+uv_clip=true
+image_flags=0
+collision_layer=1
+embed_internal_images=false
+save_tiled_properties=false
+add_background=true
+post_import_script=""

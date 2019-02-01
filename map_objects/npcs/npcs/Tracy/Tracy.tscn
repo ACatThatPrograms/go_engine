@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://map_objects/npcs/npcs/Tracy/Tracy.gd" type="Script" id=1]
+[ext_resource path="res://engine/entity_anim.tscn" type="PackedScene" id=2]
+
+
+[sub_resource type="StreamTexture" id=1]
+
+flags = 0
+load_path = "res://.import/tracy.png-6dbb1855290d255f77d44e202c5e3b49.stex"
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 4 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 9, 5 )
+
+[node name="Tracy" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+load_sprite_dir = "down"
+movement_type = "wander"
+speak_command = null
+char_0_speak = "Hey, hows it going? [wait] @ It's been awhile since we had a heart to heart you know [dd] . [dd] . [dd] . [wait] @ Well I won't get too mushy, but you can always talk to your big sis! [wait] [end]"
+char_1_speak = "You guys really did a number to that big bad guy! [wait] @ I look up to you guys, even if I'm older you know. [wait] [end]"
+char_2_speak = "I bet you helped out a lot, huh Mr. Smarty Pants? [wait] [break] Ha [d] [6] Ha [d] [6] [Ha] [d] [6] [break] @ Don't worry [char_2] , I'm just messing with you. [wait] [end]"
+char_3_speak = "You know you can change out of your kung fu clothes now, right? [wait] @ Whatever makes you happy though! I'm just glad you're all back safe. [wait] [end]"
+
+[node name="anim" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
+
+texture = SubResource( 1 )
+vframes = 2
+hframes = 4
+
+[node name="collider" type="CollisionShape2D" parent="." index="2"]
+
+position = Vector2( 0, 8 )
+shape = SubResource( 2 )
+
+[node name="hitbox" type="Area2D" parent="." index="3"]
+
+editor/display_folded = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" index="0"]
+
+position = Vector2( 0, 8 )
+shape = SubResource( 3 )
+
+

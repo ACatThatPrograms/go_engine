@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://items/equippable/weapons/300/300.gd" type="Script" id=1]
+
+
+
+
+
+[node name="cracked_bat" type="Node2D" index="0"]
+
+visible = false
+script = ExtResource( 1 )
+
+

@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://map_objects/npcs/npcs/Paula/Paula.gd" type="Script" id=1]
+[ext_resource path="res://engine/entity_anim.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/assets/paula.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 4 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 9, 5 )
+
+[node name="Paula" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+load_sprite_dir = null
+movement_type = "still"
+speak_command = null
+char_0_speak = null
+char_1_speak = null
+char_2_speak = null
+char_3_speak = null
+
+[node name="anim" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
+
+texture = ExtResource( 3 )
+vframes = 2
+hframes = 4
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+
+[node name="collider" type="CollisionShape2D" parent="." index="2"]
+
+position = Vector2( 0, 8 )
+shape = SubResource( 1 )
+
+[node name="hitbox" type="Area2D" parent="." index="3"]
+
+editor/display_folded = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" index="0"]
+
+position = Vector2( 0, 8 )
+shape = SubResource( 2 )
+
+[node name="tween" type="Tween" parent="." index="4"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+

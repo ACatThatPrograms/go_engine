@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://engine/audio/music.gd" type="Script" id=1]
+[ext_resource path="res://engine/audio/sfx.gd" type="Script" id=2]
+
+[node name="audio" type="Node2D"]
+
+[node name="music" type="AudioStreamPlayer" parent="." index="0"]
+
+stream = null
+volume_db = -18.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
+
+[node name="sfx" type="AudioStreamPlayer" parent="." index="1"]
+
+stream = null
+volume_db = -18.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+script = ExtResource( 2 )
+
+

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/onett.ogg-75978796b29ab5f660cbd90a81b8cbf4.oggstr"
+
+[deps]
+
+source_file="res://sound/music/onett.ogg"
+dest_files=[ "res://.import/onett.ogg-75978796b29ab5f660cbd90a81b8cbf4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
