@@ -24,6 +24,10 @@ var arrival_direction = ""
 var money = 20
 var party_members = [0] # By character_id
 
+## In battle flag
+
+var in_battle = false
+
 ## Character Data ##
 	## CHARACTER ID = 0 
 var CHARACTER_DATA = [{
@@ -31,6 +35,9 @@ var CHARACTER_DATA = [{
 	"name": "Ness", 
 	"party_position": 0,
 	"status": "Normal",
+	"level": 1,
+	"xp" : 0,
+	"psi": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],
 	"hp" : 15,
 	"max_hp": 80,
 	"pp" : 5,
@@ -46,14 +53,18 @@ var CHARACTER_DATA = [{
 	"body": null,
 	"arms": null,
 	"other": null,
-	"inventory": [400, 402, 403, 400, 402],
-	"skin": "res://player/assets/ness_pajamas.png"
+	"inventory": [400, 402, 403, 400, 402, 300, 326, 376, 351],
+	"equipment" : [],
+	"skin": "res://player/assets/ness.png"
 },
 {	#CHARACTER ID = 1
 	"char_id" : 1,
 	"name": "Paula", 
 	"party_position": 0,
 	"status": "Normal",
+	"level": 1,
+	"xp" : 0,
+	"psi": [0],
 	"hp" : 30,
 	"max_hp": 60,
 	"pp" : 10,
@@ -69,7 +80,8 @@ var CHARACTER_DATA = [{
 	"body": null,
 	"arms": null,
 	"other": null,
-	"inventory": [],
+	"inventory": [300, 400, 400],
+	"equipment" : [],
 	"skin": "res://player/assets/paula.png",
 },
 {	#CHARACTER ID = 2
@@ -77,6 +89,9 @@ var CHARACTER_DATA = [{
 	"name": "Jeff", 
 	"party_position": 0,
 	"status": "Normal",
+	"level": 1,
+	"xp" : 0,
+	"psi": [],
 	"hp" : 30,
 	"max_hp": 30,
 	"pp" : 0,
@@ -93,6 +108,7 @@ var CHARACTER_DATA = [{
 	"arms": null,
 	"other": null,
 	"inventory": [],
+	"equipment" : [],
 	"skin": "res://player/assets/jeff.png",
 },
 {	#CHARACTER ID = 3
@@ -100,6 +116,9 @@ var CHARACTER_DATA = [{
 	"name": "Poo", 
 	"party_position": 0,
 	"status": "Normal",
+	"level": 1,
+	"xp" : 0,
+	"psi": [],
 	"hp" : 85,
 	"max_hp": 85,
 	"pp" : 110,
@@ -116,6 +135,7 @@ var CHARACTER_DATA = [{
 	"arms": null,
 	"other": null,
 	"inventory": [],
+	"equipment" : [],
 	"skin": "res://player/assets/poo.png",
 }
 ]
@@ -157,4 +177,4 @@ func load_data():
 	if save_available:
 		pass
 	else:
-		
+		pass

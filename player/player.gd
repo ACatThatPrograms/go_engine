@@ -6,6 +6,7 @@ var is_following = false ## Flags if follower if party leader
 
 ## Signals
 signal party_position_update ## Signals party position has changed
+signal equip_change # Signals equipment change for goods and inventory menus
 
 # Character Status Box
 var status_block ## Connected status_block to UI
@@ -21,6 +22,9 @@ var last_party_position
 var hp
 var pp
 var status
+var level
+var xp
+var psi
 
 # Maximum Vital Statistics #
 var MAX_HP
@@ -40,6 +44,8 @@ var EQUIP_WEAPON
 var EQUIP_BODY
 var EQUIP_ARMS
 var EQUIP_OTHER
+
+var equipment = [] ## List of equipped by ID
 
 ## FOLLOWER LOGIC
 
@@ -85,6 +91,8 @@ func data_init(character_id):
 	character_name = game_data.CHARACTER_DATA[character_id]["name"]
 	party_position = game_data.CHARACTER_DATA[character_id]["party_position"]
 	status = game_data.CHARACTER_DATA[character_id]["status"]
+	level = game_data.CHARACTER_DATA[character_id]["level"]
+	xp = game_data.CHARACTER_DATA[character_id]["xp"]
 	hp = game_data.CHARACTER_DATA[character_id]["hp"]
 	MAX_HP = game_data.CHARACTER_DATA[character_id]["max_hp"]
 	pp = game_data.CHARACTER_DATA[character_id]["pp"]
@@ -101,7 +109,12 @@ func data_init(character_id):
 	EQUIP_ARMS = game_data.CHARACTER_DATA[character_id]["arms"]
 	EQUIP_OTHER = game_data.CHARACTER_DATA[character_id]["other"]
 	inventory = game_data.CHARACTER_DATA[character_id]["inventory"]
+	equipment = game_data.CHARACTER_DATA[character_id]["equipment"]
+	psi = game_data.CHARACTER_DATA[character_id]["psi"]
 	skin = game_data.CHARACTER_DATA[character_id]["skin"]
+	
+	$psi.init_psi_nodes()
+	refresh_equipment()
 	
 	$Sprite.texture = load(skin)
 	
@@ -299,7 +312,10 @@ func talk_to():
 			if object.get_parent().get("TYPE"):
 				match object.get_parent().TYPE:
 					"NPC":
-						NPC_talk(object.get_parent())
+						if object.SUB_TYPE == "ENEMY":
+							pass
+						else:
+							NPC_talk(object.get_parent())
 					_:
 						no_npc_check()
 			else:
@@ -347,7 +363,10 @@ func handle_interaction(object):
 			"inspection_box":
 				inspection_box_check(object)
 			"NPC":
-				NPC_talk(object)
+				if object.SUB_TYPE == "ENEMY":
+					pass
+				else:
+					NPC_talk(object.get_parent())
 			_:
 				pass
 	else:
@@ -450,6 +469,27 @@ func _tween_over(a,b):
 	TYPE = last_type
 
 #################################
+## EQUIPMENT RELATED FUNCTIONS ##
+#################################
+
+func equip_item_from_goods(item):
+	inventory.remove(inventory.find(item.DATA["ID"]))
+	item.DATA["EQUIPPED"] = true
+	equipment.append(item.DATA["ID"])
+	emit_signal("equip_change")
+	refresh_equipment()
+
+func unequip_item_from_goods(item):
+	equipment.remove(equipment.find(item.DATA["ID"]))
+	for x in get_node("equipment").get_children():
+		if x.DATA["EQUIP_TYPE"] == item.DATA["EQUIP_TYPE"]:
+			x.queue_free()
+	item.DATA["EQUIPPED"] = false
+	inventory.append(item.DATA["ID"])
+	emit_signal("equip_change")
+	refresh_equipment()
+
+#################################
 ## SIGNALS & RELATED FUNCTIONS ##
 #################################
 
@@ -493,6 +533,29 @@ func change_texture(resource):
 	skin = resource
 	$Sprite.texture = load(resource)
 
+func refresh_equipment():
+	var weapon_x = null
+	var body_x = null
+	var arms_x = null
+	var other_x = null
+	for x in equipment:
+		var equip_instance = item.fetch_item(x)
+		match equip_instance.DATA["EQUIP_TYPE"]:
+			"WEAPON":
+				weapon_x = equip_instance
+			"BODY":
+				body_x = equip_instance
+			"ARMS":
+				arms_x = equip_instance
+			"OTHER":
+				other_x = equip_instance
+			_:
+				equip_instance.queue_free()
+	EQUIP_WEAPON = weapon_x
+	EQUIP_BODY = body_x
+	EQUIP_ARMS = arms_x
+	EQUIP_OTHER = other_x
+
 ##############################
 ##    GAME_DATA RELATED     ## ## game_data is repsonsible for static data between hard saves
 ##############################
@@ -503,6 +566,8 @@ func extract_data():
 		"name": character_name, 
 		"party_position": party_position,
 		"status": status,
+		"level" : level,
+		"xp" : xp,
 		"hp" : hp,
 		"max_hp": MAX_HP,
 		"pp" : pp,
@@ -519,6 +584,8 @@ func extract_data():
 		"arms": EQUIP_ARMS,
 		"other": EQUIP_OTHER,
 		"inventory": inventory,
+		"equipment": equipment,
+		"psi" : psi,
 		"skin": skin
 	}
 
@@ -533,7 +600,47 @@ func debug_inputs():
 	if DEBUG_MODE:
 		if Input.is_action_just_pressed("debug_num_9"):
 			print("------------\nBody: %s, Position: %s, State: %s, Type: %s\nCurrent Status Block: %s, Positon Offset: %s, x/y: %s, Trail[0]: %s" % [character_name, party_position, state, TYPE, status_block.name, position_offset, position, player_trail[0][0]])
+			print_psi()
+			print_equipment()
 		if Input.is_action_just_pressed("debug_num_7"):
 			modulate_0()
 		if Input.is_action_just_pressed("debug_num_8"):
 			modulate_1()
+
+func print_psi():
+	print(character_name, " has the following PSI:")
+	var psi_list = ""
+	for x in $psi.get_children():
+		psi_list += x.psi_name + ", "
+	print(psi_list)
+
+func print_equipment():
+	print(character_name, " has the following nodes in equipment: ")
+
+	## PRINT NODE INFORMATION
+
+	for x in get_node("equipment").get_children():
+		print(x.DATA["NAME"], "Equipped?: ", x.DATA["EQUIPPED"])
+	
+	print("EQUIP SLOTS: ", EQUIP_WEAPON, EQUIP_BODY, EQUIP_ARMS, EQUIP_OTHER)
+	
+	## PRINT WEAPON SLOT DATA REFERENCED NODE DATA
+	var weapon_name = "None"
+	var body_name = "None"
+	var arms_name = "None"
+	var other_name = "None"
+	
+	if EQUIP_WEAPON != null:
+		weapon_name = EQUIP_WEAPON.DATA["NAME"]
+	if EQUIP_BODY != null:
+		body_name = EQUIP_BODY.DATA["NAME"]
+	if EQUIP_ARMS != null:
+		arms_name = EQUIP_ARMS.DATA["NAME"]
+	if EQUIP_OTHER != null:
+		other_name = EQUIP_OTHER.DATA["NAME"]
+
+	print("WEAPON : %s" % weapon_name)
+	print("BODY : %s" % body_name)
+	print("ARMS : %s" % arms_name)
+	print("OTHER : %s" % other_name)
+	

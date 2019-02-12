@@ -54,7 +54,6 @@ func menu_controls():
 	if Input.is_action_just_pressed("snes_a"):
 		audio.get_node("sfx").play_sound(dict.sfx_id["[4]"])
 		active_item.use(active_item, active_char, name_tags[selected_char][1], self)
-		print("Use %s on %s" % [active_item.DATA["NAME"], name_tags[selected_char][1].character_name])
 
 	if Input.is_action_just_pressed("debug_num_9"):
 		print(name_tags)

@@ -19,7 +19,7 @@ var state
 
 var move_dirs = ["still","up","down","left","right"]
 var m_dir = 0
-var frames_to_hold_anim = 80
+var frames_to_hold_anim = 100
 var anim_wait = false # Flag to pause between direction changes
 var still_frame_swap = 25
 var still_frame_default = 25
@@ -82,7 +82,8 @@ func wandering():
 			m_dir = randi()%5
 			anim_wait = true
 			
-		frames_to_hold_anim = randi()%80+50
+		frames_to_hold_anim = floor(rand_range(50, 100))
+		print(frames_to_hold_anim)
 
 func still():
 	if still_frame_swap > 0:

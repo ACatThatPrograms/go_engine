@@ -16,48 +16,47 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-_sections_unfolded = [ "Transform", "Z Index" ]
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-position = Vector2( 0, -8 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 2048, 768, 32, 16 )
-_sections_unfolded = [ "Region" ]
+_sections_unfolded = [ "Transform" ]
 
 [node name="Sprite2" type="Sprite" parent="." index="1"]
 
-position = Vector2( 32, -8 )
+position = Vector2( 32, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 2528, 1088, 32, 16 )
-_sections_unfolded = [ "Region" ]
+_sections_unfolded = [ "Transform" ]
 
 [node name="Sprite3" type="Sprite" parent="." index="2"]
 
-position = Vector2( -96, -8 )
+position = Vector2( -96, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 2528, 1088, 32, 16 )
-_sections_unfolded = [ "Region" ]
+_sections_unfolded = [ "Transform" ]
 
 [node name="Sprite4" type="Sprite" parent="." index="3"]
 
-position = Vector2( -64, -8 )
+position = Vector2( -64, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 2528, 1088, 32, 16 )
-_sections_unfolded = [ "Region" ]
+_sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="4"]
 
-position = Vector2( 17, -4 )
+position = Vector2( 17, 4 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="5"]
 
-position = Vector2( -80, -4 )
+position = Vector2( -80, 4 )
 shape = SubResource( 1 )
 
 

@@ -45,6 +45,11 @@ const PAUSE = "[pause]" # Ends parsing until switched back.
 
 const ITEM_HEAL = "[item_heal]" # Emits item signal to heals target the last calculated item restoration amount.
 
+## PSI Command Codes & Signals
+
+const PSI_HEAL = "[psi_heal]" ## Same as item heal but for psi
+const PSI_DEPLETE = "[psi_deplete]" # Reduced PP by PP cost
+
 ## Box command codes
 
 const CLOSE_BOX = "[close_box]" # Closes connected gift box
@@ -59,6 +64,8 @@ const CHAR_3 = "[char_3]"
 ## Signals
 
 signal item_heal
+signal psi_heal
+signal psi_deplete
 signal close_box
 signal choice_yes
 signal choice_no
@@ -85,7 +92,7 @@ var command_string_position = 0
 
 ## Word positioning
 
-var word_to_print = "null"
+var word_to_print = []
 var word_char_count = 0
 
 ## Text flags
@@ -228,7 +235,6 @@ func reset_choice_state():
 func parse_next_command():
 	if command_string_position < command_string_array.size():
 		var cc = command_string_array[command_string_position]
-		
 		#Place bullet on text start
 		if command_string_position == 0:
 			$text.append_bbcode("[img]res://ui/assets/print_icon.png[/img]")
@@ -260,6 +266,12 @@ func parse_next_command():
 			ITEM_HEAL:
 				connect("item_heal", last_entity, "item_heal", [], 4)
 				emit_signal("item_heal")
+			PSI_HEAL:
+				connect("psi_heal", last_entity, "psi_heal", [], 4)
+				emit_signal("psi_heal")
+			PSI_DEPLETE:
+				connect("psi_deplete", last_entity, "psi_deplete", [], 4)
+				emit_signal("psi_deplete")			
 			## Giftbox Interaction
 			CLOSE_BOX: ## Used to close box when no room in inv
 				emit_signal("close_box")

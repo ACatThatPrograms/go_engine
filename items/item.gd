@@ -53,7 +53,13 @@ var command_to_send = null
 
 var ITEM_ID = {
 	## EQUIPPABLES - WEAPONS
-	300:"res://items/equippable/weapons/300/300.tscn", # Cracked Bat
+	300:"res://items/equippable/weapons/300/300.tscn", 	# Cracked Bat
+	## EQUIPPABLED - BODY
+	326:"res://items/equippable/body/326/326.tscn", 	# Travel Charm
+	## EQUIPPABLED - ARMS
+	351:"res://items/equippable/arms/351/351.tscn", # Copper Bracelet
+	## EQUIPPABLED - OTHER
+	376:"res://items/equippable/other/376/376.tscn", # Attack Ring
 	## FOOD
 	400:"res://items/food/400/400.tscn", # Cookie
 	401:"res://items/food/401/401.tscn", # Hamburger
@@ -87,7 +93,7 @@ func use(item, user, target, calling_entity): # Calling entity is menu or object
 		CAPSULE:
 			print("Capsule")
 		EQUIPPABLE:
-			print("Equippable")
+			use_equippable(item, user, target, calling_entity)
 		FOOD:
 			use_food(item, user, target, calling_entity)
 		INGREDIENTS:
@@ -104,7 +110,7 @@ func use(item, user, target, calling_entity): # Calling entity is menu or object
 ## Item Use Functions
 
 func use_food(item, user, target, calling_entity):
-	print("From item :" ,calling_entity.name)
+	print("From item :" , calling_entity.name)
 	calling_entity.switch_state("inactive")
 	
 	if game_data.party_members.size() == 1:
@@ -214,6 +220,24 @@ func item_heal():
 	get_tree().get_nodes_in_group("ui")[0].get_node("goods_menu").remove_item(self)
 	heal_target.hp += hp_to_rec
 	heal_target.pp += pp_to_rec
+
+func use_equippable(item, user, target, calling_entity):
+	calling_entity.switch_state("inactive")
+	
+	if !item.DATA["EQUIPPED"]:
+		if target.char_id == item.DATA["EQUIP_OWNER"] || item.DATA["EQUIP_OWNER"] == item.ALL:
+			target.equip_item_from_goods(item)
+			command_to_send = "[sfx] [17] %s equipped the %s. [wait] [break] [end]" % [target.character_name, item.DATA["NAME"]]
+			emit_signal("command_loaded")
+		else:
+			command_to_send = "%s can't equip the %s. [wait] [break] [end]" % [target.character_name, item.DATA["NAME"]]
+			emit_signal("command_loaded")
+	else:
+		target.unequip_item_from_goods(item)
+		command_to_send = "[sfx] [5] %s unequipped the %s. [wait] [break] [end]" % [target.character_name, item.DATA["NAME"]]
+		emit_signal("command_loaded")
+	
+	text_box.connect("text_done", text_box, "_text_done_close_group", [[calling_entity]], 4) # 4 = one shot
 
 ## Textbox Command Load - Called automatically after command_loaded signal
 

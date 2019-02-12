@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 var MAP_SPEED = 70
 var TYPE = "CHARACTER"
+var SUB_TYPE = ""
 
 var move_dir = Vector2(0,0)
 var sprite_dir = "_down"
@@ -107,13 +108,13 @@ func npc_anim_check():
 		if position == last_pos:
 			move_dir = dir._still
 		else:
-			if position.x < last_pos.x:
+			if floor(position.x) < floor(last_pos.x):
 				move_dir = dir._left
-			elif position.x > last_pos.x:
+			elif floor(position.x) > floor(last_pos.x):
 				move_dir = dir._right
-			elif position.y > last_pos.y:
+			elif floor(position.y) > floor(last_pos.y):
 				move_dir = dir._down
-			elif position.y < last_pos.y:
+			elif floor(position.y) < floor(last_pos.y):
 				move_dir = dir._up
 		last_pos = position
 	else:

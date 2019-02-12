@@ -63,7 +63,6 @@ func _menuController():
 		if toSelect < 0:
 			toSelect += toSelect + 6
 			selected = toSelect
-			print(toSelect)
 		else:
 			selected = toSelect
 
@@ -71,6 +70,7 @@ func _menuController():
 		if selected == 0:
 			talk_to()
 		if selected == 1:
+			audio.get_node("sfx").play_sound(dict.sfx_id["[7]"])
 			PSI()
 		if selected == 2:
 			check()
@@ -118,7 +118,7 @@ func _talk_to_done():
 	ui.close_player_menu()
 
 func PSI():
-	print("PSI")
+	ui.open_psi_menu(self)
 
 func check():
 	switch_state("inactive")
@@ -126,13 +126,17 @@ func check():
 	get_tree().get_nodes_in_group("party")[0].leader.check()
 
 func open_equip():
-	print("Equip")
+	audio.get_node("sfx").play_sound(dict.sfx_id["[7]"])
+	ui.open_equip_menu(self)
 
 func open_goods():
 	get_parent().open_goods_menu(self)
 
 func open_status():
+	audio.get_node("sfx").play_sound(dict.sfx_id["[7]"])
 	ui.open_status_menu(self)
+	ui.get_node("funds_box").show()
+	ui.get_node("status_blocks").show()
 
 ## UI SIGNALS
 

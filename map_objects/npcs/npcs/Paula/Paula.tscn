@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://map_objects/npcs/npcs/Paula/Paula.gd" type="Script" id=1]
-[ext_resource path="res://engine/entity_anim.tscn" type="PackedScene" id=2]
-[ext_resource path="res://player/assets/paula.png" type="Texture" id=3]
+[ext_resource path="res://player/assets/paula.png" type="Texture" id=2]
+[ext_resource path="res://engine/entity_anim.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -16,6 +16,7 @@ extents = Vector2( 9, 5 )
 
 [node name="Paula" type="KinematicBody2D"]
 
+position = Vector2( 0, -12 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -23,20 +24,20 @@ collision/safe_margin = 0.08
 script = ExtResource( 1 )
 load_sprite_dir = null
 movement_type = "still"
-speak_command = null
-char_0_speak = null
+speak_command = "I'm waiting for [char_0]."
+char_0_speak = "Hey there you are, [char_0] . [wait] @ We need to meet [char_2] down at the burger joint, he got too excited and ran ahead. [wait] [break] @ So are you ready to get going? [wait] [break] [choice]"
 char_1_speak = null
 char_2_speak = null
 char_3_speak = null
 
-[node name="anim" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 
-[node name="Sprite" type="Sprite" parent="." index="1"]
-
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 vframes = 2
 hframes = 4
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+
+[node name="anim" parent="." index="1" instance=ExtResource( 3 )]
 
 [node name="collider" type="CollisionShape2D" parent="." index="2"]
 

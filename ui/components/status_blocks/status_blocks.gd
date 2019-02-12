@@ -123,7 +123,8 @@ func inputs():
 		audio.get_node("sfx").play_sound(dict.sfx_id["[5]"])
 		get_parent().close_status_blocks()
 	if Input.is_action_just_pressed("snes_a"):
-		get_tree().get_nodes_in_group("ui")[0].open_player_menu(self)
+		get_tree().get_nodes_in_group("ui")[0].open_player_menu(get_tree().get_nodes_in_group("party")[0].party_members[0])
+		get_parent().get_node("funds_box").switch_state("inactive")
 		audio.get_node("sfx").play_sound(dict.sfx_id["[4]"])
 		switch_state("inactive")
 

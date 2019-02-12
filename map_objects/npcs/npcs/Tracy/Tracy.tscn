@@ -3,7 +3,6 @@
 [ext_resource path="res://map_objects/npcs/npcs/Tracy/Tracy.gd" type="Script" id=1]
 [ext_resource path="res://engine/entity_anim.tscn" type="PackedScene" id=2]
 
-
 [sub_resource type="StreamTexture" id=1]
 
 flags = 0
@@ -21,11 +20,13 @@ extents = Vector2( 9, 5 )
 
 [node name="Tracy" type="KinematicBody2D"]
 
+position = Vector2( 0, -12 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
 load_sprite_dir = "down"
 movement_type = "wander"
 speak_command = null
@@ -34,13 +35,13 @@ char_1_speak = "You guys really did a number to that big bad guy! [wait] @ I loo
 char_2_speak = "I bet you helped out a lot, huh Mr. Smarty Pants? [wait] [break] Ha [d] [6] Ha [d] [6] [Ha] [d] [6] [break] @ Don't worry [char_2] , I'm just messing with you. [wait] [end]"
 char_3_speak = "You know you can change out of your kung fu clothes now, right? [wait] @ Whatever makes you happy though! I'm just glad you're all back safe. [wait] [end]"
 
-[node name="anim" parent="." index="0" instance=ExtResource( 2 )]
-
-[node name="Sprite" type="Sprite" parent="." index="1"]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 
 texture = SubResource( 1 )
 vframes = 2
 hframes = 4
+
+[node name="anim" parent="." index="1" instance=ExtResource( 2 )]
 
 [node name="collider" type="CollisionShape2D" parent="." index="2"]
 

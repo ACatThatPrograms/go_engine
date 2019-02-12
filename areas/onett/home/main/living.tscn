@@ -17,20 +17,19 @@ default_load_position = Vector2( 220, 90 )
 
 [node name="Over" parent="." index="1"]
 
+editor/display_folded = false
 tile_data = PoolIntArray( 131070, 48, 0, 131080, 40, 0, 131081, 40, 0 )
+_sections_unfolded = [ "Cell" ]
 
 [node name="party" parent="Over" index="0" instance=ExtResource( 3 )]
 
 [node name="Mom" parent="Over" index="1" instance=ExtResource( 4 )]
 
-position = Vector2( 109, 88 )
+position = Vector2( 160, 96 )
 
 [node name="Paula" parent="Over" index="2" instance=ExtResource( 5 )]
 
-position = Vector2( 290, 76 )
-_sections_unfolded = [ "Transform" ]
-speak_command = "I'm waiting for [char_0]."
-char_0_speak = "Hey there you are, [char_0] . [wait] @ We need to meet [char_2] down at the burger joint, he got too excited and ran ahead. [wait] [break] @ So are you ready to get going? [wait] [break] [choice]"
+position = Vector2( 290, 79 )
 
 [node name="10" parent="Collisions" index="1"]
 

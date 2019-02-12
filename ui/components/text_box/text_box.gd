@@ -9,7 +9,6 @@ func _init():
 		should_hide = true
 
 func _ready():
-	print(get_tree().get_nodes_in_group("ui"))
 	$text.clear()
 	if ISOLATE_AND_DEBUG_TEXT_BOX:	
 		state = "active"

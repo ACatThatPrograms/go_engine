@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
-[ext_resource path="res://engine/entity_anim.tscn" type="PackedScene" id=2]
-[ext_resource path="res://player/assets/ness.png" type="Texture" id=3]
+[ext_resource path="res://player/assets/ness.png" type="Texture" id=2]
+[ext_resource path="res://engine/entity_anim.tscn" type="PackedScene" id=3]
 [ext_resource path="res://engine/camera/camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://engine/camera/camera.gd" type="Script" id=5]
+[ext_resource path="res://player/psi/psi_node.gd" type="Script" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -20,39 +21,34 @@ extents = Vector2( 9, 5 )
 "player",
 ]]
 
-position = Vector2( 0, -1 )
+position = Vector2( 0, -12 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform", "Visibility" ]
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
 load_sprite_dir = null
 
-[node name="inventory" type="Node2D" parent="." index="0" groups=[
-"inventory",
-]]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 
-scale = Vector2( 0.1, 0.1 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="anim" parent="." index="1" instance=ExtResource( 2 )]
-
-[node name="Sprite" type="Sprite" parent="." index="2"]
-
-position = Vector2( 0, -12 )
-texture = ExtResource( 3 )
+position = Vector2( 0, -1 )
+texture = ExtResource( 2 )
 vframes = 2
 hframes = 4
 _sections_unfolded = [ "Animation", "Offset", "Region" ]
 
-[node name="collider" type="CollisionShape2D" parent="." index="3"]
+[node name="anim" parent="." index="1" instance=ExtResource( 3 )]
 
-position = Vector2( 0, -3 )
+[node name="collider" type="CollisionShape2D" parent="." index="2"]
+
+position = Vector2( 0, 8 )
 shape = SubResource( 1 )
 
-[node name="hitbox" type="Area2D" parent="." index="4"]
+[node name="hitbox" type="Area2D" parent="." index="3"]
 
+editor/display_folded = true
+position = Vector2( 0, 11 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -68,14 +64,15 @@ position = Vector2( 0, -4 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="camera" parent="." index="5" instance=ExtResource( 4 )]
+[node name="camera" parent="." index="4" instance=ExtResource( 4 )]
 
+position = Vector2( 0, 11 )
 scale = Vector2( 0.1, 0.1 )
 current = false
 script = ExtResource( 5 )
 _sections_unfolded = [ "Drag Margin", "Smoothing", "Transform" ]
 
-[node name="tween" type="Tween" parent="." index="6"]
+[node name="tween" type="Tween" parent="." index="5"]
 
 repeat = false
 playback_process_mode = 1
@@ -83,5 +80,22 @@ playback_speed = 1.0
 playback/active = false
 playback/repeat = false
 playback/speed = 1.0
+
+[node name="psi" type="Node2D" parent="." index="6"]
+
+position = Vector2( 0, 11 )
+script = ExtResource( 6 )
+
+[node name="inventory" type="Node2D" parent="." index="7" groups=[
+"inventory",
+]]
+
+position = Vector2( 0, 11 )
+scale = Vector2( 0.1, 0.1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="equipment" type="Node2D" parent="." index="8"]
+
+position = Vector2( 0, 11 )
 
 

@@ -38,6 +38,7 @@ func state_inactive():
 func state_active():
 	show_hide_selector()
 	animate_selectors()
+	check_if_equipment()
 	
 	if Input.is_action_just_pressed("ui_down"):
 		audio.get_node("sfx").play_sound(dict.sfx_id["[6]"])
@@ -59,7 +60,7 @@ func state_active():
 			0:
 				use_item(active_char, active_item)
 			1:
-				print("Give", active_item.DATA["NAME"])
+				give_item(active_char, active_item)
 			2:
 				print("Drop", active_item.DATA["NAME"])
 			3:
@@ -69,13 +70,27 @@ func state_active():
 		audio.get_node("sfx").play_sound(dict.sfx_id["[5]"])
 		close()
 
+func check_if_equipment():
+	if active_item.DATA["TYPE"] == item.EQUIPPABLE:
+		$container/use.text = "Equip"
+	else:
+		$container/use.text = "Use"
 ## Item Interaction Logic
 
 func use_item(char_target, item_to_use):
-	if game_data.party_members.size() == 1:
+	if game_data.party_members.size() == 1 || item_to_use.DATA["TYPE"] == item.EQUIPPABLE:
 		item_to_use.use(item_to_use, char_target, char_target, self)
 	else:
 		get_parent().get_node("char_selector").open(self, active_char, item_to_use)
+
+func give_item(active_character, item):
+	if game_data.party_members.size() == 1:
+		switch_state("inactive")
+		text_box.connect("text_done", text_box, "_text_done", [self], 4) # 4 = one shot
+		text_box.load_command("You gave the %s to yourself. [wait] [break] @ How nice. [wait] [end]" % item.DATA["NAME"])
+		text_box.read_command(self)
+	else:
+		print("GIVE TO WHO??")
 
 func help_item(item):
 	switch_state("inactive")
@@ -100,7 +115,8 @@ func open(opening_entity, selectedItem, active_character):
 
 func close():
 	if engine.DEBUG:
-		print(active_user.name, " is leaving sub menu.")
+		if active_user:
+			print(active_user.name, " is leaving sub menu.")
 	switch_state("inactive")
 	selected = 0
 	active_item = null

@@ -6,6 +6,8 @@ var DEBUG_MODE = false
 
 var sub_state = "who"
 
+var windows_loaded = false
+
 ## Specific Readiness Flags
 
 var ready_for_input_main = false
@@ -34,14 +36,15 @@ onready var ui = get_parent()
 
 # Array that loads inventories based on ("party")[0].party_members
 var inventories = [] # array[0][0] is inventory 0, array [0][1] is inv 0's owner object e.g player_2
-var inv_owner = [] # Selected inventories owner char_id
 var selected_inventory = 0
+
+var equipments = [] # Array of equipments, just like inventories
 
 # Box Switch Timers
 var timer_max = 30
 var timer = 0
 
-func _ready(): ## Checks current inventory of player and loads it into menu
+func _ready():
 	pass
 
 func _process(delta):
@@ -68,18 +71,23 @@ func state_active():
 					check_which()
 				else:
 					ready_for_input_which = true
+					
 	else:
 		ready_for_input_main = true
+	window_tracker()
 	
 	if item_list.empty():
 		hide_selectors()
 	_animate_selector(item_selection)
 
-func refresh_inventory(): ## Called on first load
+func refresh_inventory(force_select = 0): ## Called on first load
 	inventories.clear()
+	equipments.clear()
+	
 	for x in get_tree().get_nodes_in_group("party")[0].party_members.size():
 		inventories.append([get_tree().get_nodes_in_group("party")[0].party_members[x].inventory, get_tree().get_nodes_in_group("party")[0].party_members[x]])
-	selected_inventory = 0
+		equipments.append([get_tree().get_nodes_in_group("party")[0].party_members[x].equipment, get_tree().get_nodes_in_group("party")[0].party_members[x]])
+	selected_inventory = force_select
 	set_name(inventories[selected_inventory][1].character_name)
 	if DEBUG_MODE:
 		var name_list = ""
@@ -96,13 +104,6 @@ func refresh_inventory(): ## Called on first load
 
 func check_who():
 	hide_selectors()
-	## View conditions
-	if !$who_box.is_visible():
-		$who_box.show()
-	if !$menu_arrows.is_visible():
-		$menu_arrows.show()
-	if $which_box.is_visible():
-		$which_box.hide()
 	## Party Size Check
 	if game_data.party_members.size() == 1:
 		selected_inventory = 0
@@ -180,10 +181,10 @@ func _anim_switch_box(a, direction):
 ###################################
 
 func check_which():
-	if !$which_box.is_visible():
-		$which_box.show()
-	if $menu_arrows.is_visible():
-		$menu_arrows.hide()
+	
+	if !inventories[selected_inventory][1].is_connected("equip_change", self, "_equipment_changed"):
+		inventories[selected_inventory][1].connect("equip_change", self, "_equipment_changed")
+		
 	_menuController()
 	_selectionHighlight()
 
@@ -263,6 +264,30 @@ func _menuController():
 				print(inventories[selected_inventory][1].character_name," Selected: ", item.DATA["NAME"])
 			select_item(item)
 
+####################
+## WINDOW TRACKER ##
+####################
+
+func window_tracker(): # Matches viewable windows to sub_state
+	## View conditions
+	if !windows_loaded:
+		match sub_state:
+			"who":
+				### HIDE
+				$which_box.hide()
+				$whom_box.hide()
+				## SHOW
+				$who_box.show()
+				$menu_arrows.show()
+			"which":
+				## HIDE
+				$who_box.hide()
+				$whom_box.hide()
+				$menu_arrows.hide()
+				## SHOW
+				$which_box.show()
+	else:
+		pass
 ############################
 ## USING ITEM STATE LOGIC ##
 ############################
@@ -293,6 +318,7 @@ func switch_state(newState):
 
 func switch_sub_state(newState):
 	sub_state = newState
+	windows_loaded = false
 
 ################################
 ## ITEM LIST LOGIC && LOADING ##
@@ -301,6 +327,17 @@ func switch_sub_state(newState):
 ## Refreshes Inventory List :: Should be called after changes
 func update_list():
 	clear_item_list()
+	if !equipments[selected_inventory][0].empty():
+		equipments[selected_inventory][0].sort()
+		for id in equipments[selected_inventory][0]:
+			var itemToAdd = item.fetch_item(id)
+			var item_label = get_node("items").get_node("item_" + str(item_count + 1))
+			itemToAdd.DATA["EQUIPPED"] = true
+			item_label.bbcode_text = "[img]res://ui/assets/equip_symbol.png[/img] " + itemToAdd.DATA["NAME"]
+			item_list.append(itemToAdd)
+			item_count += 1
+			inventories[0][1].get_node("equipment").add_child(itemToAdd)
+	inventories[selected_inventory][0].sort()
 	for id in inventories[selected_inventory][0]:
 		var itemToAdd = item.fetch_item(id)
 		var item_label = get_node("items").get_node("item_" + str(item_count + 1))
@@ -308,6 +345,7 @@ func update_list():
 		item_list.append(itemToAdd)
 		item_count += 1
 		inventories[0][1].get_node("inventory").add_child(itemToAdd)
+	
 	var selected_block = int(inventories[selected_inventory][1].status_block.name[6])
 	if get_parent().get_node("status_blocks").active_block != selected_block:
 		get_parent().get_node("status_blocks").active_block = selected_block
@@ -321,6 +359,8 @@ func clear_item_list():
 	for item in $items.get_children():
 		item.bbcode_text = ""
 	for i in inventories[selected_inventory][1].get_node("inventory").get_children():
+		i.queue_free()
+	for i in inventories[selected_inventory][1].get_node("equipment").get_children():
 		i.queue_free()
 	
 
@@ -368,6 +408,11 @@ func _goods_menu_closed():
 	reset_selected_item()
 	refresh_inventory()
 	hide()
+
+func _equipment_changed():
+	if DEBUG_MODE:
+		print("Refreshing inventory on equipment change")
+	refresh_inventory(selected_inventory)
 
 ##################################################
 ## SELECTION HIGHLIGHTING && INV ARROW ANIMATION##

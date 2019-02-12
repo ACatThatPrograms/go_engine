@@ -87,6 +87,22 @@ func open_status_menu(opening_entity):
 func close_status_menu():
 	$status_menu.close()
 
+## Psi menu
+
+func open_psi_menu(opening_entity, character = null):
+	$psi_menu.open(opening_entity, character)
+
+func close_psi_menu():
+	$psi_menu.close()
+
+## Equip menu
+
+func open_equip_menu(opening_entity):
+	$equip_menu.open(opening_entity)
+
+func close_equip_menu():
+	$equip_menu.close()
+
 ## Text Box Functions
 
 
@@ -97,3 +113,6 @@ func text_box():
 
 func goods_menu():
 	return goods_menu
+
+func status_blocks():
+	return $status_blocks

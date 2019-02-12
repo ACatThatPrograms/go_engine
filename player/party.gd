@@ -76,7 +76,6 @@ func add_party_member(char_id):
 		party_members.append(character_to_add)
 		character_to_add.modulate= Color(1,1,1,0)
 		character_to_add.data_init(char_id)
-		#character_to_add.position = leader.position
 		character_to_add.switch_state("active")
 		character_to_add.modulate= Color(1,1,1,1)
 		print("Adding party member: %s to position: %s" % [character_to_add.character_name, character_to_add.party_position])
